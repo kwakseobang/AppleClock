@@ -11,6 +11,19 @@
 		D610F91B2C3140AA0017407F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D610F91A2C3140AA0017407F /* ContentView.swift */; };
 		D610F91D2C3140AC0017407F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D610F91C2C3140AC0017407F /* Assets.xcassets */; };
 		D610F9202C3140AC0017407F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D610F91F2C3140AC0017407F /* Preview Assets.xcassets */; };
+		D610F92E2C3151460017407F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D610F92D2C3151460017407F /* MainView.swift */; };
+		D610F93C2C3152C90017407F /* WorldClockListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D610F93B2C3152C90017407F /* WorldClockListView.swift */; };
+		D610F93E2C3152D40017407F /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D610F93D2C3152D40017407F /* AlertView.swift */; };
+		D610F9402C3152E80017407F /* StopWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D610F93F2C3152E80017407F /* StopWatchView.swift */; };
+		D610F9422C3152F40017407F /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D610F9412C3152F40017407F /* TimerView.swift */; };
+		D610F9442C316CC90017407F /* WorldClockTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D610F9432C316CC90017407F /* WorldClockTableCellView.swift */; };
+		D610F9462C3175430017407F /* WorldClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D610F9452C3175430017407F /* WorldClock.swift */; };
+		D610F94A2C3176920017407F /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D610F9492C3176920017407F /* Date+Extensions.swift */; };
+		D610F94C2C317A4A0017407F /* WorldClockListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D610F94B2C317A4A0017407F /* WorldClockListViewModel.swift */; };
+		D610F94E2C317A810017407F /* Int+Extenstions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D610F94D2C317A810017407F /* Int+Extenstions.swift */; };
+		D610F9502C3186550017407F /* WorldSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = D610F94F2C3186550017407F /* WorldSelect.swift */; };
+		D610F9552C3189840017407F /* WorldColckSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D610F9542C3189840017407F /* WorldColckSelectView.swift */; };
+		D610F9572C3189AC0017407F /* WorldClockSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D610F9562C3189AC0017407F /* WorldClockSelectView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +32,19 @@
 		D610F91A2C3140AA0017407F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D610F91C2C3140AC0017407F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D610F91F2C3140AC0017407F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D610F92D2C3151460017407F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		D610F93B2C3152C90017407F /* WorldClockListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldClockListView.swift; sourceTree = "<group>"; };
+		D610F93D2C3152D40017407F /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		D610F93F2C3152E80017407F /* StopWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchView.swift; sourceTree = "<group>"; };
+		D610F9412C3152F40017407F /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
+		D610F9432C316CC90017407F /* WorldClockTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldClockTableCellView.swift; sourceTree = "<group>"; };
+		D610F9452C3175430017407F /* WorldClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldClock.swift; sourceTree = "<group>"; };
+		D610F9492C3176920017407F /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
+		D610F94B2C317A4A0017407F /* WorldClockListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldClockListViewModel.swift; sourceTree = "<group>"; };
+		D610F94D2C317A810017407F /* Int+Extenstions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extenstions.swift"; sourceTree = "<group>"; };
+		D610F94F2C3186550017407F /* WorldSelect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldSelect.swift; sourceTree = "<group>"; };
+		D610F9542C3189840017407F /* WorldColckSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldColckSelectView.swift; sourceTree = "<group>"; };
+		D610F9562C3189AC0017407F /* WorldClockSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldClockSelectView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,9 +77,12 @@
 		D610F9172C3140AA0017407F /* AppleClock */ = {
 			isa = PBXGroup;
 			children = (
+				D610F9282C314A020017407F /* Domain */,
+				D610F9272C3149F00017407F /* Resources */,
+				D610F9262C3149DC0017407F /* Presentation */,
+				D610F9472C3176620017407F /* Utils */,
 				D610F9182C3140AA0017407F /* AppleClockApp.swift */,
 				D610F91A2C3140AA0017407F /* ContentView.swift */,
-				D610F91C2C3140AC0017407F /* Assets.xcassets */,
 				D610F91E2C3140AC0017407F /* Preview Content */,
 			);
 			path = AppleClock;
@@ -65,6 +94,208 @@
 				D610F91F2C3140AC0017407F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D610F9262C3149DC0017407F /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				D610F92A2C31511F0017407F /* Main */,
+				D610F92F2C31522F0017407F /* WorldColok */,
+				D610F9302C3152370017407F /* Alert */,
+				D610F9312C31523D0017407F /* StopWatch */,
+				D610F9322C3152490017407F /* Timer */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		D610F9272C3149F00017407F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D610F91C2C3140AC0017407F /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D610F9282C314A020017407F /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				D610F9292C314A1D0017407F /* Entities */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		D610F9292C314A1D0017407F /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				D610F9512C3186640017407F /* World */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		D610F92A2C31511F0017407F /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				D610F92B2C3151270017407F /* View */,
+				D610F92C2C3151300017407F /* ViewModel */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		D610F92B2C3151270017407F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D610F92D2C3151460017407F /* MainView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D610F92C2C3151300017407F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D610F92F2C31522F0017407F /* WorldColok */ = {
+			isa = PBXGroup;
+			children = (
+				D610F9332C31526F0017407F /* View */,
+				D610F9342C3152750017407F /* ViewModel */,
+			);
+			path = WorldColok;
+			sourceTree = "<group>";
+		};
+		D610F9302C3152370017407F /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				D610F9352C31527A0017407F /* View */,
+				D610F9362C31527D0017407F /* ViewModel */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
+		D610F9312C31523D0017407F /* StopWatch */ = {
+			isa = PBXGroup;
+			children = (
+				D610F9372C3152860017407F /* View */,
+				D610F9382C31528A0017407F /* ViewModel */,
+			);
+			path = StopWatch;
+			sourceTree = "<group>";
+		};
+		D610F9322C3152490017407F /* Timer */ = {
+			isa = PBXGroup;
+			children = (
+				D610F93A2C3152B20017407F /* View */,
+				D610F9392C3152A90017407F /* ViewModel */,
+			);
+			path = Timer;
+			sourceTree = "<group>";
+		};
+		D610F9332C31526F0017407F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D610F9532C3189600017407F /* WorldClock */,
+				D610F9522C3189430017407F /* WorldClockList */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D610F9342C3152750017407F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D610F94B2C317A4A0017407F /* WorldClockListViewModel.swift */,
+				D610F9562C3189AC0017407F /* WorldClockSelectView.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D610F9352C31527A0017407F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D610F93D2C3152D40017407F /* AlertView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D610F9362C31527D0017407F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D610F9372C3152860017407F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D610F93F2C3152E80017407F /* StopWatchView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D610F9382C31528A0017407F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D610F9392C3152A90017407F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D610F93A2C3152B20017407F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D610F9412C3152F40017407F /* TimerView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D610F9472C3176620017407F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D610F9482C31766A0017407F /* Extensions */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		D610F9482C31766A0017407F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D610F9492C3176920017407F /* Date+Extensions.swift */,
+				D610F94D2C317A810017407F /* Int+Extenstions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D610F9512C3186640017407F /* World */ = {
+			isa = PBXGroup;
+			children = (
+				D610F9452C3175430017407F /* WorldClock.swift */,
+				D610F94F2C3186550017407F /* WorldSelect.swift */,
+			);
+			path = World;
+			sourceTree = "<group>";
+		};
+		D610F9522C3189430017407F /* WorldClockList */ = {
+			isa = PBXGroup;
+			children = (
+				D610F9432C316CC90017407F /* WorldClockTableCellView.swift */,
+				D610F93B2C3152C90017407F /* WorldClockListView.swift */,
+			);
+			path = WorldClockList;
+			sourceTree = "<group>";
+		};
+		D610F9532C3189600017407F /* WorldClock */ = {
+			isa = PBXGroup;
+			children = (
+				D610F9542C3189840017407F /* WorldColckSelectView.swift */,
+			);
+			path = WorldClock;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +368,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D610F9422C3152F40017407F /* TimerView.swift in Sources */,
+				D610F9502C3186550017407F /* WorldSelect.swift in Sources */,
+				D610F9402C3152E80017407F /* StopWatchView.swift in Sources */,
+				D610F93E2C3152D40017407F /* AlertView.swift in Sources */,
+				D610F94A2C3176920017407F /* Date+Extensions.swift in Sources */,
 				D610F91B2C3140AA0017407F /* ContentView.swift in Sources */,
+				D610F9552C3189840017407F /* WorldColckSelectView.swift in Sources */,
+				D610F92E2C3151460017407F /* MainView.swift in Sources */,
+				D610F94E2C317A810017407F /* Int+Extenstions.swift in Sources */,
+				D610F9462C3175430017407F /* WorldClock.swift in Sources */,
+				D610F93C2C3152C90017407F /* WorldClockListView.swift in Sources */,
+				D610F94C2C317A4A0017407F /* WorldClockListViewModel.swift in Sources */,
+				D610F9572C3189AC0017407F /* WorldClockSelectView.swift in Sources */,
 				D610F9192C3140AA0017407F /* AppleClockApp.swift in Sources */,
+				D610F9442C316CC90017407F /* WorldClockTableCellView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
