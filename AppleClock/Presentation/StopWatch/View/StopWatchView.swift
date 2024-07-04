@@ -13,15 +13,25 @@ struct StopWatchView: View {
     var body: some View {
         VStack {
             Spacer()
+                .frame(height: 150)
             StopWatchOperationView(stopWatchViewModel: stopWatchViewModel)
             Spacer()
                 .frame(height: 100)
             StopWatchBtnView(stopWatchViewModel: stopWatchViewModel)
                 .padding(.bottom)
-            Divider()
-                
-            Spacer()
+            Rectangle()
+                .frame(height: 0.5)
+                .foregroundColor(.gray)
+                .opacity(0.4)
+            if !stopWatchViewModel.isEmptylaptimes {
+               
+                LaptimeCellListView(stopWatchViewModel: stopWatchViewModel)
+            }
+            
+                Spacer()
+
         }
+        .padding()
     }
     
 }
@@ -39,10 +49,7 @@ private struct StopWatchOperationView: View {
             // 타이머 값을 표시하는 레이블
             Text(stopWatchViewModel.formatTime(seconds: stopWatchViewModel.secondsElapsed))
                 .font(.system(size: 70,weight: .light,design: .monospaced))
-                .monospacedDigit() //글자 간에 고정된 폭을 가질 때 사용한다.
-            
-            
-            
+
         }
     }
 }
@@ -61,9 +68,11 @@ private struct StopWatchBtnView: View {
         HStack {
             // 타이머 랩 타임 및 리셋
             Button {
-                if stopWatchViewModel.mode == .isPaused {
+             
                     stopWatchViewModel.initOrRecordBtnTapped()
-                }
+                print(stopWatchViewModel.isEmptylaptimes)
+                print(stopWatchViewModel.laptimes.count)
+              
             }label: {
                 Text(stopWatchViewModel.mode == .isPaused ? "재설정" : "랩")
                     .font(.system(size: 18))
@@ -101,7 +110,52 @@ private struct StopWatchBtnView: View {
                     )
             }
         }
-        .padding(.horizontal)
+    
+    }
+}
+//MARK: - lap time cell List view
+private struct LaptimeCellListView: View {
+    @ObservedObject var stopWatchViewModel: StopWatchViewModel
+    
+    fileprivate init(stopWatchViewModel: StopWatchViewModel) {
+        self.stopWatchViewModel = stopWatchViewModel
+    }
+    fileprivate var body: some View {
+        ScrollView{
+            
+                ForEach(stopWatchViewModel.laptimes.indices, id: \.self) { index in
+                    LaptimeCellView(stopWatchViewModel: stopWatchViewModel,index: index)
+                    Rectangle()
+                        .frame(height: 0.5)
+                        .foregroundColor(.gray)
+                        .opacity(0.6)
+                }
+            
+        }
+    }
+}
+//MARK: - lap time cell view
+private struct LaptimeCellView: View {
+    @ObservedObject var stopWatchViewModel: StopWatchViewModel
+    private var index: Int
+    fileprivate init(stopWatchViewModel: StopWatchViewModel,index:Int) {
+        self.stopWatchViewModel = stopWatchViewModel
+        self.index = index
+    }
+    //index랑
+    fileprivate var body: some View {
+        HStack {
+            Text("랩 \(index + 1)")
+                .font(.system(size: 19))
+            
+            Spacer()
+            Text(stopWatchViewModel.formatTime(seconds: stopWatchViewModel.laptimes[index]))
+                .font(.system(size: 17,weight: .light,design: .monospaced))
+
+        }
+        .padding(.vertical,7)
+      
+        
     }
 }
 #Preview {

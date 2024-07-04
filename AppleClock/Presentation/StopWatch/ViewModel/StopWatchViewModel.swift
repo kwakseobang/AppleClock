@@ -4,7 +4,7 @@
 //
 //  Created by 곽서방 on 7/1/24.
 //
-
+//의문 
 import Foundation
 import UIKit
 import Combine
@@ -17,15 +17,35 @@ enum mode : String {
 }
 class StopWatchViewModel: ObservableObject {
     @Published var mode: mode = .isStop
-    @Published var stopWatch: StopWatch = .init(millisecondElapsed: 0.00)
-    @Published var secondsElapsed: Double = 0.00
+    @Published var stopWatch: StopWatch = .init(millisecondElapsed: 0.00,lapElapsed: 0.0, lapTimes: [])
+    @Published var isEmptylaptimes: Bool = true
     private var cancellable: AnyCancellable?
-}
 
+    
+    var secondsElapsed: Double {
+        stopWatch.millisecondElapsed
+    }
+    
+    var laptimeElapsed: Double {
+        stopWatch.lapElapsed
+    }
+    var laptimes: [Double] {
+        stopWatch.lapTimes
+    }
+    var laptimesCount: Int {
+        stopWatch.lapTimes.count
+    }
+}
+///[double] ->  self.stopWatch.lapTimes.append(laptime) -> self.stopWatch.lapTimes[self.laptimesCount-1] += 0.01 ->  self.stopWatch.lapElapsed = 0.00
 extension StopWatchViewModel {
     // 시작 버튼
     func startBtnTapped() {
-        self.secondsElapsed = stopWatch.millisecondElapsed
+//        self.secondsElapsed = stopWatch.millisecondElapsed
+        self.stopWatch.lapElapsed = stopWatch.millisecondElapsed
+        //laptime 초기값 넣고 초기화
+        self.stopWatch.lapTimes.append(self.laptimeElapsed)
+        
+        self.isEmptylaptimes = false
         // start
         self.start()
         
@@ -48,10 +68,17 @@ extension StopWatchViewModel {
         if mode == .isPaused {
             self.stop()
             self.mode = .isStop
-            self.secondsElapsed = 0.00
+            self.stopWatch.millisecondElapsed = 0.00
+//            self.stopWatch.lapTimes.removeAll()
+//            self.isEmptylaptimes = true
+            self.stopWatch.lapElapsed = 0.00
+
+        } else {
+//            self.stopWatch.lapElapsed = 0.00
+            self.lap()
         }
     }
-    // 시간 포매
+    // 시간 포맷팅
     func formatTime(seconds: Double) -> String {
         let totalSeconds = Int(seconds)
         let minutes = totalSeconds / 60
@@ -86,7 +113,9 @@ private extension StopWatchViewModel {
         cancellable = Timer.publish(every: 0.01, on: .main, in: .common)
             .autoconnect()
             .sink(receiveValue: { _ in
-                self.secondsElapsed += 0.01
+                self.stopWatch.millisecondElapsed += 0.01
+                self.stopWatch.lapTimes[self.laptimesCount-1] += 0.01
+
             })
     }
     
@@ -94,6 +123,14 @@ private extension StopWatchViewModel {
     func stop() {
         cancellable?.cancel()
         cancellable = nil
+    }
+    /// laptime.append, delete, nil
+    // laptime
+    func lap() {
+       
+        stopWatch.lapTimes.append(self.laptimeElapsed)
+
+        
     }
     
 }
