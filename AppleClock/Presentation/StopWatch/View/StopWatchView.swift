@@ -19,17 +19,15 @@ struct StopWatchView: View {
                 .frame(height: 100)
             StopWatchBtnView(stopWatchViewModel: stopWatchViewModel)
                 .padding(.bottom)
+            
             Rectangle()
                 .frame(height: 0.5)
                 .foregroundColor(.gray)
-                .opacity(0.4)
-            if !stopWatchViewModel.isEmptylaptimes {
-               
-                LaptimeCellListView(stopWatchViewModel: stopWatchViewModel)
-            }
+                .opacity(0.6)
             
-                Spacer()
-
+            LaptimeCellListView(stopWatchViewModel: stopWatchViewModel)
+            Spacer()
+            
         }
         .padding()
     }
@@ -49,7 +47,7 @@ private struct StopWatchOperationView: View {
             // 타이머 값을 표시하는 레이블
             Text(stopWatchViewModel.formatTime(seconds: stopWatchViewModel.secondsElapsed))
                 .font(.system(size: 70,weight: .light,design: .monospaced))
-
+            
         }
     }
 }
@@ -68,11 +66,7 @@ private struct StopWatchBtnView: View {
         HStack {
             // 타이머 랩 타임 및 리셋
             Button {
-             
-                    stopWatchViewModel.initOrRecordBtnTapped()
-                print(stopWatchViewModel.isEmptylaptimes)
-                print(stopWatchViewModel.laptimes.count)
-              
+                stopWatchViewModel.initOrRecordBtnTapped()
             }label: {
                 Text(stopWatchViewModel.mode == .isPaused ? "재설정" : "랩")
                     .font(.system(size: 18))
@@ -83,10 +77,9 @@ private struct StopWatchBtnView: View {
                             .fill(Color.gray.opacity(
                                 stopWatchViewModel.mode == .isStop ?  0.2 : 0.4)
                             ) // opacity 투명도
-                        
                     )
-                    .disabled(stopWatchViewModel.mode == .isStop)
             }
+            .disabled(stopWatchViewModel.mode == .isStop)
             Spacer()
             // 타이머 시작 및 일시정지
             Button {
@@ -96,21 +89,22 @@ private struct StopWatchBtnView: View {
                     stopWatchViewModel.pauseOrRestartBtnTapped()
                 }
             }label: {
-                Text(stopWatchViewModel.mode == .isStop ? "시작" : "중단" )
+                Text(stopWatchViewModel.mode != .isAction  ? "시작" : "중단" )
                     .font(.system(size: 18))
                     .foregroundColor(
-                        stopWatchViewModel.mode == .isStop ? .green : .red)
+                        stopWatchViewModel.mode != .isAction ? .green : .red)
                     .frame(width: 88, height: 88)
                     .background(
                         Circle()
                             .fill(
-                                stopWatchViewModel.mode == .isStop ?
+                                stopWatchViewModel.mode != .isAction ?
                                 Color.green.opacity(0.2): Color.red.opacity(0.2)
                             ) // opacity 투명도
                     )
             }
+            
         }
-    
+        
     }
 }
 //MARK: - lap time cell List view
@@ -122,39 +116,61 @@ private struct LaptimeCellListView: View {
     }
     fileprivate var body: some View {
         ScrollView{
+            if stopWatchViewModel.mode != .isStop {
+                LaptimeCellView(time: stopWatchViewModel.formatTime(seconds:stopWatchViewModel.laptimeElapsed ) ,index: stopWatchViewModel.laptimesCount)
+            }
             
-                ForEach(stopWatchViewModel.laptimes.indices, id: \.self) { index in
-                    LaptimeCellView(stopWatchViewModel: stopWatchViewModel,index: index)
-                    Rectangle()
-                        .frame(height: 0.5)
-                        .foregroundColor(.gray)
-                        .opacity(0.6)
-                }
+            ForEach(stopWatchViewModel.laptimes.indices.reversed(), id: \.self) { index in
+                LaptimeCellView(
+                    time: stopWatchViewModel.laptimes[index],
+                    index: index,
+                    maxIndex: stopWatchViewModel.maxLapTimeIndex,
+                    minIndex: stopWatchViewModel.minLapTimeIndex
+                )
+                
+            }
             
         }
     }
 }
 //MARK: - lap time cell view
 private struct LaptimeCellView: View {
-    @ObservedObject var stopWatchViewModel: StopWatchViewModel
+    private var time: String
     private var index: Int
-    fileprivate init(stopWatchViewModel: StopWatchViewModel,index:Int) {
-        self.stopWatchViewModel = stopWatchViewModel
+    private var maxIndex: Int?
+    private var minIndex: Int?
+    fileprivate init(time: String,
+                     index:Int,
+                     maxIndex: Int? = nil,
+                     minIndex:Int? = nil
+    ) {
+        self.time = time
         self.index = index
+        self.maxIndex = maxIndex
+        self.minIndex = minIndex
     }
-    //index랑
+    
     fileprivate var body: some View {
         HStack {
             Text("랩 \(index + 1)")
-                .font(.system(size: 19))
+                .font(.system(size: 18))
             
             Spacer()
-            Text(stopWatchViewModel.formatTime(seconds: stopWatchViewModel.laptimes[index]))
-                .font(.system(size: 17,weight: .light,design: .monospaced))
-
+            Text(time)
+                .font(.system(size: 18,weight: .light,design: .monospaced))
+            
         }
+        
+        .foregroundColor(
+            
+            maxIndex == index ? .red : minIndex == index ? .green : .white
+        )
         .padding(.vertical,7)
-      
+        
+        Rectangle()
+            .frame(height: 0.5)
+            .foregroundColor(.gray)
+            .opacity(0.4)
         
     }
 }

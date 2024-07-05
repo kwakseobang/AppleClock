@@ -4,23 +4,28 @@
 //
 //  Created by 곽서방 on 7/1/24.
 //
-//의문 
+//의문
 import Foundation
 import UIKit
 import Combine
+import SwiftUI
 
-enum mode : String {
-    case isAction = "중단" // 버튼 텍스트 표시를 위해
-    case isPaused = "시작"
-    case isStop = "재설정"
-
+enum mode {
+    case isAction
+    case isPaused
+    case isStop
+    
 }
 class StopWatchViewModel: ObservableObject {
     @Published var mode: mode = .isStop
-    @Published var stopWatch: StopWatch = .init(millisecondElapsed: 0.00,lapElapsed: 0.0, lapTimes: [])
+    @Published var stopWatch: StopWatch = .init(millisecondElapsed: 0.00,lapElapsed: 0.00, lapTimes: [])
     @Published var isEmptylaptimes: Bool = true
+    
     private var cancellable: AnyCancellable?
-
+    private var maxIndex: Int?
+    private var minIndex: Int?
+    private var maxlaptimeElapsed: Double = -999
+    private var minlaptimeElapsed: Double = 999
     
     var secondsElapsed: Double {
         stopWatch.millisecondElapsed
@@ -29,25 +34,38 @@ class StopWatchViewModel: ObservableObject {
     var laptimeElapsed: Double {
         stopWatch.lapElapsed
     }
-    var laptimes: [Double] {
+    var laptimes: [String] {
         stopWatch.lapTimes
     }
     var laptimesCount: Int {
         stopWatch.lapTimes.count
     }
+    
+    var maxLapTime: Double? {
+        maxlaptimeElapsed
+    }
+    
+    var minLapTime: Double? {
+        minlaptimeElapsed
+    }
+    
+    var maxLapTimeIndex: Int? {
+        maxIndex
+    }
+    
+    var minLapTimeIndex: Int? {
+        minIndex
+    }
+    
+    
 }
-///[double] ->  self.stopWatch.lapTimes.append(laptime) -> self.stopWatch.lapTimes[self.laptimesCount-1] += 0.01 ->  self.stopWatch.lapElapsed = 0.00
 extension StopWatchViewModel {
     // 시작 버튼
     func startBtnTapped() {
-//        self.secondsElapsed = stopWatch.millisecondElapsed
-        self.stopWatch.lapElapsed = stopWatch.millisecondElapsed
-        //laptime 초기값 넣고 초기화
-        self.stopWatch.lapTimes.append(self.laptimeElapsed)
-        
         self.isEmptylaptimes = false
         // start
         self.start()
+        mode = .isAction
         
     }
     
@@ -62,33 +80,28 @@ extension StopWatchViewModel {
             self.mode = .isPaused
         }
     }
-   
+    
     //초기화 및 랩타임
     func initOrRecordBtnTapped() {
         if mode == .isPaused {
             self.stop()
             self.mode = .isStop
-            self.stopWatch.millisecondElapsed = 0.00
-//            self.stopWatch.lapTimes.removeAll()
-//            self.isEmptylaptimes = true
-            self.stopWatch.lapElapsed = 0.00
-
+            self.reset()
+            
         } else {
-//            self.stopWatch.lapElapsed = 0.00
             self.lap()
+            self.stopWatch.lapElapsed = 0.0
         }
     }
-    // 시간 포맷팅
+    // timeToString
     func formatTime(seconds: Double) -> String {
         let totalSeconds = Int(seconds)
         let minutes = totalSeconds / 60
         let remainingSeconds = totalSeconds % 60
         let milliseconds = Int((seconds - Double(totalSeconds)) * 100)
-
+        
         return String(format: "%02d:%02d.%02d", minutes, remainingSeconds, milliseconds)
     }
-
-    
 }
 
 //내부에서만 사용 예정
@@ -97,25 +110,25 @@ private extension StopWatchViewModel {
     func start() {
         guard cancellable == nil else {return} //nil이어야 설정
         
-       // TODO: - 세분화 예정
-        var backgroundTaskID: UIBackgroundTaskIdentifier? //백그라운드 작업 아이디를 저장할 변수 초기값 nil
-        //앱이 백그라운드로 전환되었을 때 일부 작업을 계속 수행할수있게 해주는 코드
-        //UIBackgroundTaskIdentifier 값을 반환하며 이 값은 나중에 백그라운드 작업을 종료시키는데 사용된다.
-        backgroundTaskID = UIApplication.shared.beginBackgroundTask {
-            if let task = backgroundTaskID {
-                //ID가 없으면 백그라운드 작업 종료
-                UIApplication.shared.endBackgroundTask(task)
-                backgroundTaskID = .invalid
-            }
-        }
-        mode = .isAction
+        // TODO: - 세분화 및 수정 예정
+        //        var backgroundTaskID: UIBackgroundTaskIdentifier? //백그라운드 작업 아이디를 저장할 변수 초기값 nil
+        //        //앱이 백그라운드로 전환되었을 때 일부 작업을 계속 수행할수있게 해주는 코드
+        //        //UIBackgroundTaskIdentifier 값을 반환하며 이 값은 나중에 백그라운드 작업을 종료시키는데 사용된다.
+        //        backgroundTaskID = UIApplication.shared.beginBackgroundTask {
+        //            if let task = backgroundTaskID {
+        //                //ID가 없으면 백그라운드 작업 종료
+        //                UIApplication.shared.endBackgroundTask(task)
+        //                backgroundTaskID = .invalid
+        //            }
+        //        }
+        
         // 경과 부분
         cancellable = Timer.publish(every: 0.01, on: .main, in: .common)
             .autoconnect()
             .sink(receiveValue: { _ in
                 self.stopWatch.millisecondElapsed += 0.01
-                self.stopWatch.lapTimes[self.laptimesCount-1] += 0.01
-
+                self.stopWatch.lapElapsed += 0.01
+                
             })
     }
     
@@ -124,12 +137,71 @@ private extension StopWatchViewModel {
         cancellable?.cancel()
         cancellable = nil
     }
-    /// laptime.append, delete, nil
     // laptime
     func lap() {
-       
-        stopWatch.lapTimes.append(self.laptimeElapsed)
-
+        stopWatch.lapTimes.append(self.formatTime(seconds: laptimeElapsed))
+        maxOrminIndex()
+    }
+    // maxIndexandminIndexFind //하드 코딩 같음. 고쳐야댐
+    //1개일때는 값만 넣고 
+    func maxOrminIndex() {
+        //첨엔 비교 대상이 없으므로 인덱스 지정 x
+        if laptimesCount == 2 {
+            if let first = Double(stopWatch.lapTimes[0]), let second = Double(stopWatch.lapTimes[1]) {
+                if first > second {
+                    maxlaptimeElapsed = first
+                    minlaptimeElapsed = second
+                    maxIndex = 0
+                    minIndex = 1
+                } else {
+                    maxlaptimeElapsed = second
+                    minlaptimeElapsed = first
+                    maxIndex = 1
+                    minIndex = 0
+                }
+            } else { return }
+          
+        }
+        //arr가 2개일 때 // 특히 이 부분
+//        else if (maxIndex == nil && minIndex == nil ){
+//            if laptimeElapsed > maxlaptimeElapsed {
+//                maxlaptimeElapsed = laptimeElapsed
+//                maxIndex = stopWatch.lapTimes.count
+//                minIndex = stopWatch.lapTimes.count
+//            } else {
+//                    minlaptimeElapsed = laptimeElapsed
+//                    minIndex = stopWatch.lapTimes.count
+//                maxIndex = stopWatch.lapTimes.count
+//            }
+            
+//        }
+        else {
+            laptimeElapsedCompare()
+        }
+        
+        // laptimeElapsedCompare
+        func laptimeElapsedCompare() {
+            if laptimeElapsed > maxlaptimeElapsed {
+                maxlaptimeElapsed = laptimeElapsed
+                maxIndex = stopWatch.lapTimes.count
+            }
+            if laptimeElapsed < minlaptimeElapsed{
+                minlaptimeElapsed = laptimeElapsed
+                minIndex = stopWatch.lapTimes.count
+            }
+        }
+        
+    }
+    //reset
+    func reset() {
+        self.stopWatch.millisecondElapsed = 0.00
+        self.stopWatch.lapElapsed = 0.00
+        maxIndex = nil
+        minIndex = nil
+        maxlaptimeElapsed = -999
+        minlaptimeElapsed = 999
+        self.stopWatch.lapTimes.removeAll()
+        self.isEmptylaptimes = true
         
     }
     
