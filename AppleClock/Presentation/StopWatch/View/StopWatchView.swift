@@ -67,6 +67,7 @@ private struct StopWatchBtnView: View {
             // 타이머 랩 타임 및 리셋
             Button {
                 stopWatchViewModel.initOrRecordBtnTapped()
+                print(stopWatchViewModel.laptimesCount)
             }label: {
                 Text(stopWatchViewModel.mode == .isPaused ? "재설정" : "랩")
                     .font(.system(size: 18))
@@ -139,10 +140,11 @@ private struct LaptimeCellView: View {
     private var index: Int
     private var maxIndex: Int?
     private var minIndex: Int?
-    fileprivate init(time: String,
-                     index:Int,
-                     maxIndex: Int? = nil,
-                     minIndex:Int? = nil
+    fileprivate init(
+        time: String,
+        index:Int,
+        maxIndex: Int? = nil,
+        minIndex:Int? = nil
     ) {
         self.time = time
         self.index = index

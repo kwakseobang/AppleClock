@@ -140,58 +140,48 @@ private extension StopWatchViewModel {
     // laptime
     func lap() {
         stopWatch.lapTimes.append(self.formatTime(seconds: laptimeElapsed))
+       
         maxOrminIndex()
+        if laptimesCount == 2 {
+            if maxIndex == nil {
+                maxIndex = 0
+            } else {
+                minIndex = 0
+            }
+        }
+        
     }
     // maxIndexandminIndexFind //하드 코딩 같음. 고쳐야댐
-    //1개일때는 값만 넣고 
+    //1개일때는 값만 넣고
     func maxOrminIndex() {
-        //첨엔 비교 대상이 없으므로 인덱스 지정 x
-        if laptimesCount == 2 {
-            if let first = Double(stopWatch.lapTimes[0]), let second = Double(stopWatch.lapTimes[1]) {
-                if first > second {
-                    maxlaptimeElapsed = first
-                    minlaptimeElapsed = second
-                    maxIndex = 0
-                    minIndex = 1
-                } else {
-                    maxlaptimeElapsed = second
-                    minlaptimeElapsed = first
-                    maxIndex = 1
-                    minIndex = 0
-                }
-            } else { return }
-          
-        }
-        //arr가 2개일 때 // 특히 이 부분
-//        else if (maxIndex == nil && minIndex == nil ){
-//            if laptimeElapsed > maxlaptimeElapsed {
-//                maxlaptimeElapsed = laptimeElapsed
-//                maxIndex = stopWatch.lapTimes.count
-//                minIndex = stopWatch.lapTimes.count
-//            } else {
-//                    minlaptimeElapsed = laptimeElapsed
-//                    minIndex = stopWatch.lapTimes.count
-//                maxIndex = stopWatch.lapTimes.count
-//            }
-            
-//        }
-        else {
-            laptimeElapsedCompare()
-        }
-        
-        // laptimeElapsedCompare
-        func laptimeElapsedCompare() {
-            if laptimeElapsed > maxlaptimeElapsed {
-                maxlaptimeElapsed = laptimeElapsed
-                maxIndex = stopWatch.lapTimes.count
+      
+        laptimeElapsedCompare()
+        print("maxTime:",maxlaptimeElapsed)
+        print("maxIndex:",maxIndex ?? "notIndex")
+        print("minTime:",minlaptimeElapsed)
+        print("minIndex:",minIndex ?? "notIndex")
+      
+    }
+    
+    // laptimeElapsedCompare
+    func laptimeElapsedCompare() {
+        if (laptimeElapsed > maxlaptimeElapsed) {
+            maxlaptimeElapsed = laptimeElapsed
+            if laptimesCount > 1 {
+                maxIndex = stopWatch.lapTimes.count - 1
             }
-            if laptimeElapsed < minlaptimeElapsed{
-                minlaptimeElapsed = laptimeElapsed
-                minIndex = stopWatch.lapTimes.count
+        }
+        // max = 1 maxlap = laptimeElapsed, min = nil, minlap = 999
+        if laptimeElapsed < minlaptimeElapsed{
+            minlaptimeElapsed = laptimeElapsed
+            if laptimesCount > 1 {
+                minIndex = stopWatch.lapTimes.count - 1
             }
         }
         
     }
+    
+    
     //reset
     func reset() {
         self.stopWatch.millisecondElapsed = 0.00
